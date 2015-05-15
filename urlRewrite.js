@@ -18,7 +18,10 @@ function requestHandler(servReq, servResp, cliReq){
     cliResp.pipe(servResp);
   });
   
-  var reqUrlparsed = url.parse(servReq.url);
+  var reqUrlParsed = url.parse(servReq.url);
+  while (reqUrlParsed.pathname.charAt(0) === '/'){
+    reqUrlParsed.pathname = reqUrlParsed.substr(1);
+  }
   servReq.removeHeader('Host');
   servReq.addHeader('Host', reqUrlParsed.pathname);
   cliReq();
